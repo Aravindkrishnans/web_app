@@ -1,21 +1,30 @@
 pipeline {
-    agent any
-
+    agent {
+        label 'Tomcat'
+    }
+    tools {
+        maven 'Maven'
+    }
     stages {
-        stage('CheckOut') {
+        stage ('Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Aravindkrishnans/web_app.git']]])
             }
         }
-        stage('mvn_build'){
+        stage ('build') {
             steps {
-                sh 'mvn clean install'
+                sh "mvn clean install"
             }
         }
-        stage('Deploy') {
+        stage('deploy') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'db784e8f-45c7-42f3-908e-222cfec50bdd', path: '', url: 'http://13.233.34.227:8080')], contextPath: 'web_apps', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.127.11.245:8080/')], contextPath: 'web_apps_01', war: '**/*.war'
             }
         }
     }
+post {
+    success {
+        echo "The Build is success"
+    }
+}
 }
