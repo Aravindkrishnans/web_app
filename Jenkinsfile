@@ -34,7 +34,7 @@ post {
     }
     aborted {
         echo "The Build is failed"
-        node ('TOmcat') {
+        node ('Tomcat') {
             checkout([$class: 'GitSCM', branches: [[name: '*/dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Aravindkrishnans/branch_test.git']]])
             sh "mvn clean install"
             deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.233.227.33:8080/')], contextPath: 'abort_01', war: '**/*.war'
