@@ -25,6 +25,9 @@ pipeline {
 post {
     success {
         echo "The Build is success"
+        node ('Tomcat') {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Aravindkrishnans/branch_test.git']]])
+        }
     }
 }
 }
