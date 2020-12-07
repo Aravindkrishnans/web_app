@@ -19,7 +19,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.233.99.209:8080/')], contextPath: 'web_apps_01', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.234.77.241:8080/')], contextPath: 'web_apps_01', war: '**/*.war'
             }
         }
     }
@@ -29,7 +29,7 @@ post {
         node ('Tomcat') {
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Aravindkrishnans/branch_test.git']]])
             sh "mvn clean install"
-            deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.233.99.209:8080/')], contextPath: 'test_01', war: '**/*.war'        
+            deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.234.77.241:8080/')], contextPath: 'test_01', war: '**/*.war'        
         }
     }
     aborted {
@@ -37,7 +37,7 @@ post {
         node ('Tomcat') {
             checkout([$class: 'GitSCM', branches: [[name: '*/dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Aravindkrishnans/branch_test.git']]])
             sh "mvn clean install"
-            deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.233.99.209:8080/')], contextPath: 'abort_01', war: '**/*.war'
+            deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://13.234.77.241:8080/')], contextPath: 'abort_01', war: '**/*.war'
         }
     }
 }
